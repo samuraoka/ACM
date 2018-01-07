@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
+using System.Linq;
 
 namespace ACM.BL.Test
 {
@@ -15,7 +17,11 @@ namespace ACM.BL.Test
             var customerList = repository.Retrieve();
 
             // Act
-            var result = repository.Find(customerList, 2);
+            var result = customerList.FirstOrDefault(c =>
+            {
+                Debug.WriteLine(c.LastName);
+                return c.CustomerId == 2;
+            });
 
             // Assert
             Assert.IsNotNull(result);
@@ -32,10 +38,33 @@ namespace ACM.BL.Test
             var customerList = repository.Retrieve();
 
             // Act
-            var result = repository.Find(customerList, 42);
+            var result = customerList.FirstOrDefault(c =>
+            {
+                Debug.WriteLine(c.LastName);
+                return c.CustomerId == 42;
+            });
 
             // Assert
             Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void SkipTest()
+        {
+            // Arrange
+            var repository = new CustomerRepository();
+            var customerList = repository.Retrieve();
+
+            // Act
+            var result = customerList
+                .Where(c => c.CustomerTypeId == 1)
+                .Skip(1).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.CustomerId);
+            Assert.AreEqual("Gamgee", result.LastName);
+            Assert.AreEqual("Samwise", result.FirstName);
         }
     }
 }

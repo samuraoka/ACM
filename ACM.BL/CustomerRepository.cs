@@ -5,19 +5,6 @@ namespace ACM.BL
 {
     public class CustomerRepository
     {
-        public Customer Find(List<Customer> customerList, int customerId)
-        {
-            Customer foundCustomer = null;
-
-            var query = from c in customerList
-                        where c.CustomerId == customerId
-                        select c;
-
-            foundCustomer = query.FirstOrDefault();
-
-            return foundCustomer;
-        }
-
         public List<Customer> Retrieve()
         {
             var custList = new List<Customer>
