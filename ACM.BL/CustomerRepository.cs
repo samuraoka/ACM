@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ACM.BL
 {
@@ -8,14 +9,11 @@ namespace ACM.BL
         {
             Customer foundCustomer = null;
 
-            foreach (var c in customerList)
-            {
-                if (c.CustomerId == customerId)
-                {
-                    foundCustomer = c;
-                    break;
-                }
-            }
+            var query = from c in customerList
+                        where c.CustomerId == customerId
+                        select c;
+
+            foundCustomer = query.FirstOrDefault();
 
             return foundCustomer;
         }
