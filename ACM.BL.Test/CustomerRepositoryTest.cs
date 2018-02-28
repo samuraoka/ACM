@@ -117,5 +117,103 @@ namespace ACM.BL.Test
             };
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void ShouldSortByNameInReverse()
+        {
+            // Arrange
+            var repository = new CustomerRepository();
+            var customerList = repository.Retrieve();
+
+            // Act
+            var result = repository.SortByNameInReverse(customerList);
+
+            // Assert
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2
+                },
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null
+                },
+            };
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void ShouldSortByType()
+        {
+            // Arrange
+            var repository = new CustomerRepository();
+            var customerList = repository.Retrieve();
+
+            // Act
+            var result = repository.SortByType(customerList);
+
+            // Assert
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null
+                },
+            };
+            Assert.Equal(expected, result);
+        }
     }
 }
