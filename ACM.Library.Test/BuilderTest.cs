@@ -123,5 +123,139 @@ namespace ACM.Library.Test
             // http://hamidmosalla.com/2017/02/25/xunit-theory-working-with-inlinedata-memberdata-classdata/
             yield return new object[] { new Customer { } };
         }
+
+        [Theory]
+        [MemberData(nameof(GetDataForIntersectOperation))]
+        public void ShouldIntercectTwoSets(ISet<int> first, ISet<int> second, ISet<int> expected)
+        {
+            // Arrange
+            var builder = new Builder();
+
+            // Act
+            var actual = builder.Intersect(first, second);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable<object[]> GetDataForIntersectOperation()
+        {
+            var first = new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            var second = new HashSet<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 };
+
+            yield return new object[] {
+                first, second, new HashSet<int> { 0, 1, 4, 9 }
+            };
+            yield return new object[] {
+                second, first, new HashSet<int> { 0, 1, 4, 9 }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(GetDataForExceptOperation))]
+        public void ShouldExceptTwoSets(ISet<int> first, ISet<int> second, ISet<int> expected)
+        {
+            // Arrange
+            var builder = new Builder();
+
+            // Act
+            var actual = builder.Except(first, second);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable<object[]> GetDataForExceptOperation()
+        {
+            var first = new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            var second = new HashSet<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 };
+
+            yield return new object[] {
+                first, second, new HashSet<int> { 2, 3, 5, 6, 7, 8 }
+            };
+            yield return new object[] {
+                second, first, new HashSet<int> { 16, 25, 36, 49, 64, 81 }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(GetDataForConcatOperation))]
+        public void ShouldConcatTwoSets(ISet<int> first, ISet<int> second, IEnumerable<int> expected, bool distinct, bool sort)
+        {
+            // Arrange
+            var builder = new Builder();
+
+            // Act
+            var actual = builder.Concat(first, second, distinct, sort);
+
+            // Analyze
+            output.WriteLine(string.Join(", ", actual).ToString());
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable<object[]> GetDataForConcatOperation()
+        {
+            var first = new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            var second = new HashSet<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 };
+
+            yield return new object[] {
+                first, second,
+                new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 },
+                false, false
+            };
+
+            yield return new object[] {
+                first, second,
+                new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 25, 36, 49, 64, 81 },
+                true, true
+            };
+
+            yield return new object[] {
+                second, first,
+                new List<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                false, false
+            };
+
+            yield return new object[] {
+                second, first,
+                new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 25, 36, 49, 64, 81 },
+                true, true
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(GetDataForUnionOperation))]
+        public void ShouldUnionTwoSets(ISet<int> first, ISet<int> second, IEnumerable<int> expected)
+        {
+            // Arrange
+            var builder = new Builder();
+
+            // Act
+            var actual = builder.Union(first, second);
+
+            // Analyze
+            output.WriteLine(string.Join(", ", actual).ToString());
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable<object[]> GetDataForUnionOperation()
+        {
+            var first = new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            var second = new HashSet<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 };
+
+            yield return new object[] {
+                first, second,
+                new HashSet<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 25, 36, 49, 64, 81 },
+            };
+
+            yield return new object[] {
+                second, first,
+                new HashSet<int> { 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 2, 3, 5, 6, 7, 8 },
+            };
+        }
     }
 }

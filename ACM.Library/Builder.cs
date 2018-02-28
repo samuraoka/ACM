@@ -37,5 +37,34 @@ namespace ACM.Library
         {
             return Enumerable.Repeat(element, 10);
         }
+
+        public IEnumerable<int> Intersect(ISet<int> first, ISet<int> second)
+        {
+            return Enumerable.Intersect(first, second);
+        }
+
+        public IEnumerable<int> Except(IEnumerable<int> first, IEnumerable<int> second)
+        {
+            return first.Except(second);
+        }
+
+        public IEnumerable<int> Concat(ISet<int> first, ISet<int> second, bool distinct, bool sort)
+        {
+            var temp = first.Concat(second);
+            if (distinct)
+            {
+                temp = temp.Distinct();
+            }
+            if (sort)
+            {
+                temp = temp.OrderBy(i => i);
+            }
+            return temp;
+        }
+
+        public IEnumerable<int> Union(ISet<int> first, ISet<int> second)
+        {
+            return first.Union(second);
+        }
     }
 }
