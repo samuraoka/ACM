@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xunit;
 
@@ -64,6 +65,57 @@ namespace ACM.BL.Test
             Assert.Equal(3, result.CustomerId);
             Assert.Equal("Gamgee", result.LastName);
             Assert.Equal("Samwise", result.FirstName);
+        }
+
+        [Fact]
+        public void ShouldSortByName()
+        {
+            // Arrange
+            var repository = new CustomerRepository();
+            var customerList = repository.Retrieve();
+
+            // Act
+            var result = repository.SortByName(customerList);
+
+            // Assert
+            // xUnit : Assert two List<T> are equal?
+            // https://stackoverflow.com/questions/419659/xunit-assert-two-listt-are-equal
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1
+                },
+            };
+            Assert.Equal(expected, result);
         }
     }
 }

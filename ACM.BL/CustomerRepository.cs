@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ACM.BL
@@ -43,6 +44,11 @@ namespace ACM.BL
                 }
             };
             return custList;
+        }
+
+        public IEnumerable<Customer> SortByName(List<Customer> customerList)
+        {
+            return customerList.OrderBy(c => c.LastName);
         }
     }
 }
