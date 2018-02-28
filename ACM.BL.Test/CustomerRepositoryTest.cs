@@ -9,7 +9,7 @@ namespace ACM.BL.Test
         //TODO
 
         [Fact]
-        public void FindTestExistingCustomer()
+        public void ShouldReturnExistingCustomer()
         {
             // Arrange
             var repository = new CustomerRepository();
@@ -30,7 +30,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void FindTestNotFound()
+        public void ShouldReturnNullIfNoCustomerFound()
         {
             // Arrange
             var repository = new CustomerRepository();
@@ -48,7 +48,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void SkipTest()
+        public void ShouldSkipSomeCustomers()
         {
             // Arrange
             var repository = new CustomerRepository();

@@ -5,7 +5,7 @@ namespace ACM.Library.Test
     public class StringExtensionsTest
     {
         [Fact]
-        public void ConvertToTitleCase()
+        public void ShouldConvertToTitleCase()
         {
             // Arrange
             var source = "the return of the king";
