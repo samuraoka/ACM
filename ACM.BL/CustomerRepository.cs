@@ -48,7 +48,7 @@ namespace ACM.BL
 
         public IEnumerable<Customer> SortByName(List<Customer> customerList)
         {
-            return customerList.OrderBy(c => c.LastName);
+            return customerList.OrderBy(c => c.LastName).ThenBy(c => c.FirstName);
         }
     }
 }

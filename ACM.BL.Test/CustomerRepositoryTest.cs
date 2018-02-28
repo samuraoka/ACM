@@ -84,19 +84,19 @@ namespace ACM.BL.Test
             {
                 new Customer
                 {
-                    CustomerId = 1,
-                    FirstName = "Frodo",
-                    LastName = "Baggins",
-                    EmailAddress = "fb@hob.me",
-                    CustomerTypeId = 1,
-                },
-                new Customer
-                {
                     CustomerId = 2,
                     FirstName = "Bilbo",
                     LastName = "Baggins",
                     EmailAddress = "bb@hob.me",
                     CustomerTypeId = null
+                },
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
                 },
                 new Customer
                 {
