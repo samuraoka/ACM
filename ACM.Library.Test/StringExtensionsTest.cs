@@ -1,11 +1,10 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ACM.Library.Test
 {
-    [TestClass]
     public class StringExtensionsTest
     {
-        [TestMethod]
+        [Fact]
         public void ConvertToTitleCase()
         {
             // Arrange
@@ -16,8 +15,8 @@ namespace ACM.Library.Test
             var result = source.ConvertToTitleCase();
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expected, result);
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
         }
     }
 }

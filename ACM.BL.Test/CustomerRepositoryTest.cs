@@ -1,15 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
+using Xunit;
 
 namespace ACM.BL.Test
 {
-    [TestClass]
     public class CustomerRepositoryTest
     {
         //TODO
 
-        [TestMethod]
+        [Fact]
         public void FindTestExistingCustomer()
         {
             // Arrange
@@ -24,13 +23,13 @@ namespace ACM.BL.Test
             });
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.CustomerId);
-            Assert.AreEqual("Baggins", result.LastName);
-            Assert.AreEqual("Bilbo", result.FirstName);
+            Assert.NotNull(result);
+            Assert.Equal(2, result.CustomerId);
+            Assert.Equal("Baggins", result.LastName);
+            Assert.Equal("Bilbo", result.FirstName);
         }
 
-        [TestMethod]
+        [Fact]
         public void FindTestNotFound()
         {
             // Arrange
@@ -45,10 +44,10 @@ namespace ACM.BL.Test
             });
 
             // Assert
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void SkipTest()
         {
             // Arrange
@@ -61,10 +60,10 @@ namespace ACM.BL.Test
                 .Skip(1).FirstOrDefault();
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.CustomerId);
-            Assert.AreEqual("Gamgee", result.LastName);
-            Assert.AreEqual("Samwise", result.FirstName);
+            Assert.NotNull(result);
+            Assert.Equal(3, result.CustomerId);
+            Assert.Equal("Gamgee", result.LastName);
+            Assert.Equal("Samwise", result.FirstName);
         }
     }
 }
