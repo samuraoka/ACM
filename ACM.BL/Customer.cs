@@ -1,4 +1,6 @@
-﻿namespace ACM.BL
+﻿using Newtonsoft.Json;
+
+namespace ACM.BL
 {
     public class Customer
     {
@@ -44,6 +46,13 @@
                 hash = hash * 23 + EmailAddress != null ? EmailAddress.GetHashCode() : 0;
                 return hash;
             }
+        }
+
+        public override string ToString()
+        {
+            // Convert JSON String To C# Object
+            // https://stackoverflow.com/questions/4611031/convert-json-string-to-c-sharp-object
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
