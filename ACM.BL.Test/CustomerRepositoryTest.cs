@@ -1,66 +1,25 @@
-﻿using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ACM.BL.Test
 {
 
-    public class CustomerRepositoryFixture
+    public class CustomerRepositoryTest
+        : IClassFixture<CustomerRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
     {
-        public CustomerRepositoryFixture()
+        private CustomerRepository customerRepo;
+        private CustomerTypeRepository customerTypeRepo;
+        private readonly ITestOutputHelper output;
+
+        public CustomerRepositoryTest(CustomerRepositoryFixture customerRepo,
+            CustomerTypeRepositoryFixture customerTypeRepo, ITestOutputHelper output)
         {
-            var mock = new Mock<CustomerRepository>();
-            mock.Setup(x => x.Retrieve()).Returns(() => new List<Customer>
-            {
-                new Customer
-                {
-                    CustomerId = 1,
-                    FirstName = "Frodo",
-                    LastName = "Baggins",
-                    EmailAddress = "fb@hob.me",
-                    CustomerTypeId = 1,
-                },
-                new Customer
-                {
-                    CustomerId = 2,
-                    FirstName = "Bilbo",
-                    LastName = "Baggins",
-                    EmailAddress = "bb@hob.me",
-                    CustomerTypeId = null
-                },
-                new Customer
-                {
-                    CustomerId = 3,
-                    FirstName = "Samwise",
-                    LastName = "Gamgee",
-                    EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1
-                },
-                new Customer
-                {
-                    CustomerId = 4,
-                    FirstName = "Rosie",
-                    LastName = "Cotton",
-                    EmailAddress = "rc@hob.me",
-                    CustomerTypeId = 2
-                }
-            });
-
-            Repository = mock.Object;
-        }
-
-        public CustomerRepository Repository { get; private set; }
-    }
-
-    public class CustomerRepositoryTest : IClassFixture<CustomerRepositoryFixture>
-    {
-        private CustomerRepository repository;
-
-        public CustomerRepositoryTest(CustomerRepositoryFixture repository)
-        {
-            this.repository = repository.Repository;
+            this.customerRepo = customerRepo.Repository;
+            this.customerTypeRepo = customerTypeRepo.Repository;
+            this.output = output;
         }
 
         //TODO
@@ -69,7 +28,7 @@ namespace ACM.BL.Test
         public void ShouldReturnExistingCustomer()
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
             var result = customerList.FirstOrDefault(c =>
@@ -89,7 +48,7 @@ namespace ACM.BL.Test
         public void ShouldReturnNullIfNoCustomerFound()
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
             var result = customerList.FirstOrDefault(c =>
@@ -106,7 +65,7 @@ namespace ACM.BL.Test
         public void ShouldSkipSomeCustomers()
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
             var result = customerList
@@ -258,10 +217,10 @@ namespace ACM.BL.Test
         public void ShouldSortByName(IList<Customer> expected)
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
-            var result = repository.SortByName(customerList);
+            var result = customerRepo.SortByName(customerList);
 
             // Assert
             // xUnit : Assert two List<T> are equal?
@@ -274,10 +233,10 @@ namespace ACM.BL.Test
         public void ShouldSortByNameInReverse(IList<Customer> expected)
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
-            var result = repository.SortByNameInReverse(customerList);
+            var result = customerRepo.SortByNameInReverse(customerList);
 
             // Assert
             Assert.Equal(expected, result);
@@ -288,10 +247,10 @@ namespace ACM.BL.Test
         public void ShouldSortByType(IList<Customer> expected)
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
-            var result = repository.SortByType(customerList);
+            var result = customerRepo.SortByType(customerList);
 
             // Assert
             Assert.Equal(expected, result);
@@ -301,10 +260,10 @@ namespace ACM.BL.Test
         public void ShouldGetNames()
         {
             // Arrange
-            var customerList = repository.Retrieve();
+            var customerList = customerRepo.Retrieve();
 
             // Act
-            var result = repository.GetNames(customerList);
+            var result = customerRepo.GetNames(customerList);
 
             // Assert
             var expected = new List<string> {
@@ -314,6 +273,50 @@ namespace ACM.BL.Test
                 "Cotton, Rosie",
             };
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void ShouldGetNameAndEmails()
+        {
+            // Arrange
+            var customerList = customerRepo.Retrieve();
+
+            // Act
+            var actual = customerRepo.GetNameAndEmails(customerList);
+
+            // Analyze
+            output.WriteLine(string.Join(", ", actual));
+
+            // Assert
+            var expected = new HashSet<CustomerNameAndEmail> {
+                new CustomerNameAndEmail { Name = "Baggins, Frodo", EmailAddress = "fb@hob.me" },
+                new CustomerNameAndEmail { Name = "Baggins, Bilbo", EmailAddress = "bb@hob.me" },
+                new CustomerNameAndEmail { Name = "Gamgee, Samwise", EmailAddress = "sg@hob.me" },
+                new CustomerNameAndEmail { Name = "Cotton, Rosie", EmailAddress = "rc@hob.me" },
+            };
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ShouldGetNameAndTypes()
+        {
+            // Arrange
+            var customerList = customerRepo.Retrieve();
+            var customerTypeList = customerTypeRepo.Retrieve();
+
+            // Act
+            var actual = customerRepo.GetNameAndTypes(customerList, customerTypeList);
+
+            // Analyze
+            output.WriteLine(string.Join(", ", actual));
+
+            // Assert
+            var expected = new HashSet<CustomerNameAndType> {
+                new CustomerNameAndType { Name = "Baggins, Frodo",  CustomerTypeName = "Corporate" },
+                new CustomerNameAndType { Name = "Gamgee, Samwise", CustomerTypeName = "Corporate" },
+                new CustomerNameAndType { Name = "Cotton, Rosie",  CustomerTypeName = "Individual" },
+            };
+            Assert.Equal(expected, actual);
         }
     }
 }

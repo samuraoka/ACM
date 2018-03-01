@@ -32,13 +32,24 @@ namespace ACM.BL
                 .Select(c => c.LastName + ", " + c.FirstName);
         }
 
-        public dynamic GetNamesAndEmail(IList<Customer> customerList)
+        public IEnumerable<CustomerNameAndEmail> GetNameAndEmails(IEnumerable<Customer> customerList)
         {
             return customerList
-                .Select(c => new
+                .Select(c => new CustomerNameAndEmail
                 {
                     Name = c.LastName + ", " + c.FirstName,
-                    c.EmailAddress
+                    EmailAddress = c.EmailAddress
+                });
+        }
+
+        public IEnumerable<CustomerNameAndType> GetNameAndTypes(IEnumerable<Customer> customerList, IEnumerable<CustomerType> customerTypeList)
+        {
+            return customerList.Join(
+                customerTypeList, c => c.CustomerTypeId, t => t.CustomerTypeId,
+                (c, t) => new CustomerNameAndType
+                {
+                    Name = c.LastName + ", " + c.FirstName,
+                    CustomerTypeName = t.TypeName
                 });
         }
     }
