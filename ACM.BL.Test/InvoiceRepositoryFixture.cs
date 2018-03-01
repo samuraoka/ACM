@@ -50,6 +50,8 @@ namespace ACM.BL.Test
                 },
             });
 
+            mock.Setup(x => x.Retrieve(It.Is<int>(i => i < 1 || 3 < i))).Returns(new List<Invoice>());
+
             Repository = mock.Object;
         }
 

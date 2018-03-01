@@ -301,5 +301,41 @@ namespace ACM.BL.Test
             };
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void ShouldGetOverdueCustomers()
+        {
+            // Arrange
+            var customerList = customerRepo.Retrieve();
+
+            // Act
+            var actual = customerRepo.GetOverdueCustomers(customerList);
+
+            // Analyze
+            output.WriteLine(string.Join(", ", actual));
+
+            // Assert
+            var expected = new HashSet<Customer> {
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(1),
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null,
+                    InvoiceList = invoiceRepo.Retrieve(2),
+                },
+            };
+            Assert.Equal(expected, actual);
+        }
     }
 }

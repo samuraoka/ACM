@@ -52,5 +52,14 @@ namespace ACM.BL
                     CustomerTypeName = t.TypeName
                 });
         }
+
+        public IEnumerable<Customer> GetOverdueCustomers(IList<Customer> customerList)
+        {
+            // ?? Operator (C# Reference)
+            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operator
+            return customerList
+                .SelectMany(c => c.InvoiceList.Where(i => (i.IsPaid ?? false) == false),
+                (c, i) => c).Distinct();
+        }
     }
 }
