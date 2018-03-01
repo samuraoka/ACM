@@ -8,17 +8,19 @@ namespace ACM.BL.Test
 {
 
     public class CustomerRepositoryTest
-        : IClassFixture<CustomerRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
+        : IClassFixture<CustomerInvoiceRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
     {
         private CustomerRepository customerRepo;
+        private InvoiceRepository invoiceRepo;
         private CustomerTypeRepository customerTypeRepo;
         private readonly ITestOutputHelper output;
 
-        public CustomerRepositoryTest(CustomerRepositoryFixture customerRepo,
-            CustomerTypeRepositoryFixture customerTypeRepo, ITestOutputHelper output)
+        public CustomerRepositoryTest(CustomerInvoiceRepositoryFixture customerInvoiceRepoFixture,
+            CustomerTypeRepositoryFixture customerTypeRepoFixture, ITestOutputHelper output)
         {
-            this.customerRepo = customerRepo.Repository;
-            this.customerTypeRepo = customerTypeRepo.Repository;
+            customerRepo = customerInvoiceRepoFixture.CustomerRepoFixture.Repository;
+            invoiceRepo = customerInvoiceRepoFixture.InvoiceRepoFixture.Repository;
+            this.customerTypeRepo = customerTypeRepoFixture.Repository;
             this.output = output;
         }
 
@@ -79,142 +81,8 @@ namespace ACM.BL.Test
             Assert.Equal("Samwise", result.FirstName);
         }
 
-        public static IEnumerable<object[]> GetExpectedData(string type)
-        {
-            switch (type)
-            {
-                case nameof(ShouldSortByName):
-                    yield return new object[]
-                    {
-                        new List<Customer>
-                        {
-                            new Customer
-                            {
-                                CustomerId = 2,
-                                FirstName = "Bilbo",
-                                LastName = "Baggins",
-                                EmailAddress = "bb@hob.me",
-                                CustomerTypeId = null
-                            },
-                            new Customer
-                            {
-                                CustomerId = 1,
-                                FirstName = "Frodo",
-                                LastName = "Baggins",
-                                EmailAddress = "fb@hob.me",
-                                CustomerTypeId = 1,
-                            },
-                            new Customer
-                            {
-                                CustomerId = 4,
-                                FirstName = "Rosie",
-                                LastName = "Cotton",
-                                EmailAddress = "rc@hob.me",
-                                CustomerTypeId = 2
-                            },
-                            new Customer
-                            {
-                                CustomerId = 3,
-                                FirstName = "Samwise",
-                                LastName = "Gamgee",
-                                EmailAddress = "sg@hob.me",
-                                CustomerTypeId = 1
-                            },
-                        }
-                    };
-                    break;
-
-                case nameof(ShouldSortByNameInReverse):
-                    yield return new object[]
-                    {
-                        new List<Customer>
-                        {
-                            new Customer
-                            {
-                                CustomerId = 3,
-                                FirstName = "Samwise",
-                                LastName = "Gamgee",
-                                EmailAddress = "sg@hob.me",
-                                CustomerTypeId = 1
-                            },
-                            new Customer
-                            {
-                                CustomerId = 4,
-                                FirstName = "Rosie",
-                                LastName = "Cotton",
-                                EmailAddress = "rc@hob.me",
-                                CustomerTypeId = 2
-                            },
-                            new Customer
-                            {
-                                CustomerId = 1,
-                                FirstName = "Frodo",
-                                LastName = "Baggins",
-                                EmailAddress = "fb@hob.me",
-                                CustomerTypeId = 1,
-                            },
-                            new Customer
-                            {
-                                CustomerId = 2,
-                                FirstName = "Bilbo",
-                                LastName = "Baggins",
-                                EmailAddress = "bb@hob.me",
-                                CustomerTypeId = null
-                            },
-                        }
-                    };
-                    break;
-
-                case nameof(ShouldSortByType):
-                    yield return new object[]
-                    {
-                        new List<Customer>
-                        {
-                            new Customer
-                            {
-                                CustomerId = 1,
-                                FirstName = "Frodo",
-                                LastName = "Baggins",
-                                EmailAddress = "fb@hob.me",
-                                CustomerTypeId = 1,
-                            },
-                            new Customer
-                            {
-                                CustomerId = 3,
-                                FirstName = "Samwise",
-                                LastName = "Gamgee",
-                                EmailAddress = "sg@hob.me",
-                                CustomerTypeId = 1
-                            },
-                            new Customer
-                            {
-                                CustomerId = 4,
-                                FirstName = "Rosie",
-                                LastName = "Cotton",
-                                EmailAddress = "rc@hob.me",
-                                CustomerTypeId = 2
-                            },
-                            new Customer
-                            {
-                                CustomerId = 2,
-                                FirstName = "Bilbo",
-                                LastName = "Baggins",
-                                EmailAddress = "bb@hob.me",
-                                CustomerTypeId = null
-                            },
-                        }
-                    };
-                    break;
-
-                default:
-                    yield return new object[] { };
-                    break;
-            }
-        }
-
-        [Theory]
-        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByName))]
-        public void ShouldSortByName(IList<Customer> expected)
+        [Fact]
+        public void ShouldSortByName()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -225,12 +93,50 @@ namespace ACM.BL.Test
             // Assert
             // xUnit : Assert two List<T> are equal?
             // https://stackoverflow.com/questions/419659/xunit-assert-two-listt-are-equal
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null,
+                    InvoiceList = invoiceRepo.Retrieve(2),
+                },
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(1),
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2,
+                    InvoiceList = invoiceRepo.Retrieve(4),
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(3),
+                },
+            };
             Assert.Equal(expected, result);
         }
 
-        [Theory]
-        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByNameInReverse))]
-        public void ShouldSortByNameInReverse(IList<Customer> expected)
+        [Fact]
+        public void ShouldSortByNameInReverse()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -239,12 +145,50 @@ namespace ACM.BL.Test
             var result = customerRepo.SortByNameInReverse(customerList);
 
             // Assert
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(3),
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2,
+                    InvoiceList = invoiceRepo.Retrieve(4),
+                },
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(1),
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null,
+                    InvoiceList = invoiceRepo.Retrieve(2),
+                },
+            };
             Assert.Equal(expected, result);
         }
 
-        [Theory]
-        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByType))]
-        public void ShouldSortByType(IList<Customer> expected)
+        [Fact]
+        public void ShouldSortByType()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -253,6 +197,45 @@ namespace ACM.BL.Test
             var result = customerRepo.SortByType(customerList);
 
             // Assert
+            var expected = new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(1),
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(3),
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2,
+                    InvoiceList = invoiceRepo.Retrieve(4),
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null,
+                    InvoiceList = invoiceRepo.Retrieve(2),
+                },
+            };
             Assert.Equal(expected, result);
         }
 

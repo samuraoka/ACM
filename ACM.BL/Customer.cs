@@ -10,6 +10,7 @@ namespace ACM.BL
         public string LastName { get; set; }
         public int? CustomerTypeId { get; set; }
         public string EmailAddress { get; set; }
+        public IList<Invoice> InvoiceList { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -19,7 +20,8 @@ namespace ACM.BL
                    FirstName == customer.FirstName &&
                    LastName == customer.LastName &&
                    EqualityComparer<int?>.Default.Equals(CustomerTypeId, customer.CustomerTypeId) &&
-                   EmailAddress == customer.EmailAddress;
+                   EmailAddress == customer.EmailAddress &&
+                   EqualityComparer<IList<Invoice>>.Default.Equals(InvoiceList, customer.InvoiceList);
         }
 
         public override int GetHashCode()
@@ -29,12 +31,13 @@ namespace ACM.BL
 
             unchecked
             {
-                var hashCode = 892000785;
+                var hashCode = 1284107729;
                 hashCode = hashCode * -1521134295 + CustomerId.GetHashCode();
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FirstName);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LastName);
                 hashCode = hashCode * -1521134295 + EqualityComparer<int?>.Default.GetHashCode(CustomerTypeId);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(EmailAddress);
+                hashCode = hashCode * -1521134295 + EqualityComparer<IList<Invoice>>.Default.GetHashCode(InvoiceList);
                 return hashCode;
             }
         }
