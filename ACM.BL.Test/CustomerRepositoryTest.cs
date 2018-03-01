@@ -296,5 +296,24 @@ namespace ACM.BL.Test
             // Assert
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void ShouldGetNames()
+        {
+            // Arrange
+            var customerList = repository.Retrieve();
+
+            // Act
+            var result = repository.GetNames(customerList);
+
+            // Assert
+            var expected = new List<string> {
+                "Baggins, Frodo",
+                "Baggins, Bilbo",
+                "Gamgee, Samwise",
+                "Cotton, Rosie",
+            };
+            Assert.Equal(expected, result);
+        }
     }
 }

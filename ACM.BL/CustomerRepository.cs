@@ -25,5 +25,21 @@ namespace ACM.BL
                 .OrderByDescending(c => c.CustomerTypeId.HasValue)
                 .ThenBy(c => c.CustomerTypeId);
         }
+
+        public IEnumerable<string> GetNames(IEnumerable<Customer> customerList)
+        {
+            return customerList
+                .Select(c => c.LastName + ", " + c.FirstName);
+        }
+
+        public dynamic GetNamesAndEmail(IList<Customer> customerList)
+        {
+            return customerList
+                .Select(c => new
+                {
+                    Name = c.LastName + ", " + c.FirstName,
+                    c.EmailAddress
+                });
+        }
     }
 }
