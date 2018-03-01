@@ -67,8 +67,141 @@ namespace ACM.BL.Test
             Assert.Equal("Samwise", result.FirstName);
         }
 
-        [Fact]
-        public void ShouldSortByName()
+        public static IEnumerable<object[]> GetExpectedData(string type)
+        {
+            switch (type)
+            {
+                case nameof(ShouldSortByName):
+                    yield return new object[]
+                    {
+                        new List<Customer>
+                        {
+                            new Customer
+                            {
+                                CustomerId = 2,
+                                FirstName = "Bilbo",
+                                LastName = "Baggins",
+                                EmailAddress = "bb@hob.me",
+                                CustomerTypeId = null
+                            },
+                            new Customer
+                            {
+                                CustomerId = 1,
+                                FirstName = "Frodo",
+                                LastName = "Baggins",
+                                EmailAddress = "fb@hob.me",
+                                CustomerTypeId = 1,
+                            },
+                            new Customer
+                            {
+                                CustomerId = 4,
+                                FirstName = "Rosie",
+                                LastName = "Cotton",
+                                EmailAddress = "rc@hob.me",
+                                CustomerTypeId = 2
+                            },
+                            new Customer
+                            {
+                                CustomerId = 3,
+                                FirstName = "Samwise",
+                                LastName = "Gamgee",
+                                EmailAddress = "sg@hob.me",
+                                CustomerTypeId = 1
+                            },
+                        }
+                    };
+                    break;
+
+                case nameof(ShouldSortByNameInReverse):
+                    yield return new object[]
+                    {
+                        new List<Customer>
+                        {
+                            new Customer
+                            {
+                                CustomerId = 3,
+                                FirstName = "Samwise",
+                                LastName = "Gamgee",
+                                EmailAddress = "sg@hob.me",
+                                CustomerTypeId = 1
+                            },
+                            new Customer
+                            {
+                                CustomerId = 4,
+                                FirstName = "Rosie",
+                                LastName = "Cotton",
+                                EmailAddress = "rc@hob.me",
+                                CustomerTypeId = 2
+                            },
+                            new Customer
+                            {
+                                CustomerId = 1,
+                                FirstName = "Frodo",
+                                LastName = "Baggins",
+                                EmailAddress = "fb@hob.me",
+                                CustomerTypeId = 1,
+                            },
+                            new Customer
+                            {
+                                CustomerId = 2,
+                                FirstName = "Bilbo",
+                                LastName = "Baggins",
+                                EmailAddress = "bb@hob.me",
+                                CustomerTypeId = null
+                            },
+                        }
+                    };
+                    break;
+
+                case nameof(ShouldSortByType):
+                    yield return new object[]
+                    {
+                        new List<Customer>
+                        {
+                            new Customer
+                            {
+                                CustomerId = 1,
+                                FirstName = "Frodo",
+                                LastName = "Baggins",
+                                EmailAddress = "fb@hob.me",
+                                CustomerTypeId = 1,
+                            },
+                            new Customer
+                            {
+                                CustomerId = 3,
+                                FirstName = "Samwise",
+                                LastName = "Gamgee",
+                                EmailAddress = "sg@hob.me",
+                                CustomerTypeId = 1
+                            },
+                            new Customer
+                            {
+                                CustomerId = 4,
+                                FirstName = "Rosie",
+                                LastName = "Cotton",
+                                EmailAddress = "rc@hob.me",
+                                CustomerTypeId = 2
+                            },
+                            new Customer
+                            {
+                                CustomerId = 2,
+                                FirstName = "Bilbo",
+                                LastName = "Baggins",
+                                EmailAddress = "bb@hob.me",
+                                CustomerTypeId = null
+                            },
+                        }
+                    };
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByName))]
+        public void ShouldSortByName(IList<Customer> expected)
         {
             // Arrange
             var repository = new CustomerRepository();
@@ -80,46 +213,12 @@ namespace ACM.BL.Test
             // Assert
             // xUnit : Assert two List<T> are equal?
             // https://stackoverflow.com/questions/419659/xunit-assert-two-listt-are-equal
-            var expected = new List<Customer>
-            {
-                new Customer
-                {
-                    CustomerId = 2,
-                    FirstName = "Bilbo",
-                    LastName = "Baggins",
-                    EmailAddress = "bb@hob.me",
-                    CustomerTypeId = null
-                },
-                new Customer
-                {
-                    CustomerId = 1,
-                    FirstName = "Frodo",
-                    LastName = "Baggins",
-                    EmailAddress = "fb@hob.me",
-                    CustomerTypeId = 1,
-                },
-                new Customer
-                {
-                    CustomerId = 4,
-                    FirstName = "Rosie",
-                    LastName = "Cotton",
-                    EmailAddress = "rc@hob.me",
-                    CustomerTypeId = 2
-                },
-                new Customer
-                {
-                    CustomerId = 3,
-                    FirstName = "Samwise",
-                    LastName = "Gamgee",
-                    EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1
-                },
-            };
             Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void ShouldSortByNameInReverse()
+        [Theory]
+        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByNameInReverse))]
+        public void ShouldSortByNameInReverse(IList<Customer> expected)
         {
             // Arrange
             var repository = new CustomerRepository();
@@ -129,46 +228,12 @@ namespace ACM.BL.Test
             var result = repository.SortByNameInReverse(customerList);
 
             // Assert
-            var expected = new List<Customer>
-            {
-                new Customer
-                {
-                    CustomerId = 3,
-                    FirstName = "Samwise",
-                    LastName = "Gamgee",
-                    EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1
-                },
-                new Customer
-                {
-                    CustomerId = 4,
-                    FirstName = "Rosie",
-                    LastName = "Cotton",
-                    EmailAddress = "rc@hob.me",
-                    CustomerTypeId = 2
-                },
-                new Customer
-                {
-                    CustomerId = 1,
-                    FirstName = "Frodo",
-                    LastName = "Baggins",
-                    EmailAddress = "fb@hob.me",
-                    CustomerTypeId = 1,
-                },
-                new Customer
-                {
-                    CustomerId = 2,
-                    FirstName = "Bilbo",
-                    LastName = "Baggins",
-                    EmailAddress = "bb@hob.me",
-                    CustomerTypeId = null
-                },
-            };
             Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void ShouldSortByType()
+        [Theory]
+        [MemberData(nameof(GetExpectedData), nameof(ShouldSortByType))]
+        public void ShouldSortByType(IList<Customer> expected)
         {
             // Arrange
             var repository = new CustomerRepository();
@@ -178,41 +243,6 @@ namespace ACM.BL.Test
             var result = repository.SortByType(customerList);
 
             // Assert
-            var expected = new List<Customer>
-            {
-                new Customer
-                {
-                    CustomerId = 1,
-                    FirstName = "Frodo",
-                    LastName = "Baggins",
-                    EmailAddress = "fb@hob.me",
-                    CustomerTypeId = 1,
-                },
-                new Customer
-                {
-                    CustomerId = 3,
-                    FirstName = "Samwise",
-                    LastName = "Gamgee",
-                    EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1
-                },
-                new Customer
-                {
-                    CustomerId = 4,
-                    FirstName = "Rosie",
-                    LastName = "Cotton",
-                    EmailAddress = "rc@hob.me",
-                    CustomerTypeId = 2
-                },
-                new Customer
-                {
-                    CustomerId = 2,
-                    FirstName = "Bilbo",
-                    LastName = "Baggins",
-                    EmailAddress = "bb@hob.me",
-                    CustomerTypeId = null
-                },
-            };
             Assert.Equal(expected, result);
         }
     }
