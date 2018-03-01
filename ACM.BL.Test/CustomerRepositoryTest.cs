@@ -1,19 +1,74 @@
-﻿using System.Collections.Generic;
+﻿using Moq;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Xunit;
 
 namespace ACM.BL.Test
 {
-    public class CustomerRepositoryTest
+
+    public class CustomerRepositoryFixture
     {
+        public CustomerRepositoryFixture()
+        {
+            var mock = new Mock<CustomerRepository>();
+            mock.Setup(x => x.Retrieve()).Returns(() => new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerId = 1,
+                    FirstName = "Frodo",
+                    LastName = "Baggins",
+                    EmailAddress = "fb@hob.me",
+                    CustomerTypeId = 1,
+                },
+                new Customer
+                {
+                    CustomerId = 2,
+                    FirstName = "Bilbo",
+                    LastName = "Baggins",
+                    EmailAddress = "bb@hob.me",
+                    CustomerTypeId = null
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1
+                },
+                new Customer
+                {
+                    CustomerId = 4,
+                    FirstName = "Rosie",
+                    LastName = "Cotton",
+                    EmailAddress = "rc@hob.me",
+                    CustomerTypeId = 2
+                }
+            });
+
+            Repository = mock.Object;
+        }
+
+        public CustomerRepository Repository { get; private set; }
+    }
+
+    public class CustomerRepositoryTest : IClassFixture<CustomerRepositoryFixture>
+    {
+        private CustomerRepository repository;
+
+        public CustomerRepositoryTest(CustomerRepositoryFixture repository)
+        {
+            this.repository = repository.Repository;
+        }
+
         //TODO
 
         [Fact]
         public void ShouldReturnExistingCustomer()
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
@@ -34,7 +89,6 @@ namespace ACM.BL.Test
         public void ShouldReturnNullIfNoCustomerFound()
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
@@ -52,7 +106,6 @@ namespace ACM.BL.Test
         public void ShouldSkipSomeCustomers()
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
@@ -195,6 +248,7 @@ namespace ACM.BL.Test
                     break;
 
                 default:
+                    yield return new object[] { };
                     break;
             }
         }
@@ -204,7 +258,6 @@ namespace ACM.BL.Test
         public void ShouldSortByName(IList<Customer> expected)
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
@@ -221,7 +274,6 @@ namespace ACM.BL.Test
         public void ShouldSortByNameInReverse(IList<Customer> expected)
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
@@ -236,7 +288,6 @@ namespace ACM.BL.Test
         public void ShouldSortByType(IList<Customer> expected)
         {
             // Arrange
-            var repository = new CustomerRepository();
             var customerList = repository.Retrieve();
 
             // Act
