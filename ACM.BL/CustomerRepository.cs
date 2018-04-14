@@ -7,6 +7,11 @@ namespace ACM.BL
     {
         public abstract IList<Customer> Retrieve();
 
+        public IEnumerable<Customer> Find(IList<Customer> customerList, int customerId)
+        {
+            return customerList.Where(c => c.CustomerId == customerId);
+        }
+
         public IEnumerable<Customer> SortByName(IEnumerable<Customer> customerList)
         {
             return customerList.OrderBy(c => c.LastName).ThenBy(c => c.FirstName);

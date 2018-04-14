@@ -31,5 +31,19 @@ namespace ACM.Win
             CustomerGridView.DataSource =
                 customerRepository.GetNameAndTypes(customerList, customerTypeList).ToList();
         }
+
+        private void CustomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var box = sender as ComboBox;
+            if (box?.SelectedValue != null)
+            {
+                int customerId;
+                if (int.TryParse(box.SelectedValue.ToString(), out customerId))
+                {
+                    var customerList = customerRepository.Retrieve();
+                    CustomerGridView.DataSource = customerRepository.Find(customerList, customerId).ToList();
+                }
+            }
+        }
     }
 }

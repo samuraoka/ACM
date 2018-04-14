@@ -29,17 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.customerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.GetCustomersButton = new System.Windows.Forms.Button();
             this.CustomerComboBox = new System.Windows.Forms.ComboBox();
             this.CustomerGridView = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).BeginInit();
+            this.customerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // customerBindingSource
-            // 
-            this.customerBindingSource.DataSource = typeof(ACM.BL.Customer);
             // 
             // GetCustomersButton
             // 
@@ -61,6 +57,7 @@
             this.CustomerComboBox.Size = new System.Drawing.Size(277, 20);
             this.CustomerComboBox.TabIndex = 0;
             this.CustomerComboBox.ValueMember = "CustomerId";
+            this.CustomerComboBox.SelectedIndexChanged += new System.EventHandler(this.CustomerComboBox_SelectedIndexChanged);
             // 
             // CustomerGridView
             // 
@@ -74,6 +71,10 @@
             this.CustomerGridView.Size = new System.Drawing.Size(664, 347);
             this.CustomerGridView.TabIndex = 2;
             // 
+            // customerBindingSource
+            // 
+            this.customerBindingSource.DataSource = typeof(ACM.BL.Customer);
+            // 
             // CustomerWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -85,8 +86,8 @@
             this.Name = "CustomerWin";
             this.Text = "Customers";
             this.Load += new System.EventHandler(this.CustomerWin_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
