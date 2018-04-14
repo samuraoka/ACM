@@ -7,21 +7,17 @@ namespace ACM.Win
 {
     public partial class CustomerWin : Form
     {
-        private readonly CustomerRepository customers;
+        private readonly CustomerRepository customers
+            = new WinFormCustomerRepository();
 
         public CustomerWin()
         {
             InitializeComponent();
-            customers = new WinFormCustomerRepository();
-        }
-
-        private void CustomerWin_Load(object sender, EventArgs e)
-        {
         }
 
         private void GetCustomersButton_Click(object sender, EventArgs e)
         {
-
+            CustomerGridView.DataSource = customers.Retrieve();
         }
     }
 }

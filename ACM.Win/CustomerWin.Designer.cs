@@ -43,7 +43,8 @@
             // 
             // GetCustomersButton
             // 
-            this.GetCustomersButton.Location = new System.Drawing.Point(542, 8);
+            this.GetCustomersButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.GetCustomersButton.Location = new System.Drawing.Point(601, 8);
             this.GetCustomersButton.Name = "GetCustomersButton";
             this.GetCustomersButton.Size = new System.Drawing.Size(75, 39);
             this.GetCustomersButton.TabIndex = 1;
@@ -68,20 +69,19 @@
             this.CustomerGridView.Location = new System.Drawing.Point(12, 53);
             this.CustomerGridView.Name = "CustomerGridView";
             this.CustomerGridView.RowTemplate.Height = 21;
-            this.CustomerGridView.Size = new System.Drawing.Size(605, 328);
+            this.CustomerGridView.Size = new System.Drawing.Size(664, 347);
             this.CustomerGridView.TabIndex = 2;
             // 
             // CustomerWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 393);
+            this.ClientSize = new System.Drawing.Size(688, 412);
             this.Controls.Add(this.CustomerGridView);
             this.Controls.Add(this.CustomerComboBox);
             this.Controls.Add(this.GetCustomersButton);
             this.Name = "CustomerWin";
             this.Text = "Customers";
-            this.Load += new System.EventHandler(this.CustomerWin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).EndInit();
             this.ResumeLayout(false);
