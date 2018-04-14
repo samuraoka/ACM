@@ -18,6 +18,12 @@ namespace ACM.Win
             InitializeComponent();
         }
 
+        private void CustomerWin_Load(object sender, EventArgs e)
+        {
+            var customerList = customerRepository.Retrieve();
+            CustomerComboBox.DataSource = customerRepository.GetNamesAndId(customerList);
+        }
+
         private void GetCustomersButton_Click(object sender, EventArgs e)
         {
             var customerList = customerRepository.Retrieve();

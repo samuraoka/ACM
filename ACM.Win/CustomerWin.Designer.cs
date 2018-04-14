@@ -54,11 +54,13 @@
             // 
             // CustomerComboBox
             // 
+            this.CustomerComboBox.DisplayMember = "Name";
             this.CustomerComboBox.FormattingEnabled = true;
             this.CustomerComboBox.Location = new System.Drawing.Point(12, 13);
             this.CustomerComboBox.Name = "CustomerComboBox";
             this.CustomerComboBox.Size = new System.Drawing.Size(277, 20);
             this.CustomerComboBox.TabIndex = 0;
+            this.CustomerComboBox.ValueMember = "CustomerId";
             // 
             // CustomerGridView
             // 
@@ -82,6 +84,7 @@
             this.Controls.Add(this.GetCustomersButton);
             this.Name = "CustomerWin";
             this.Text = "Customers";
+            this.Load += new System.EventHandler(this.CustomerWin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CustomerGridView)).EndInit();
             this.ResumeLayout(false);

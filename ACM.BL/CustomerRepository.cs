@@ -32,6 +32,18 @@ namespace ACM.BL
                 .Select(c => c.LastName + ", " + c.FirstName);
         }
 
+        public dynamic GetNamesAndId(IEnumerable<Customer> customerList)
+        {
+            var query = customerList.OrderBy(c => c.LastName)
+                .ThenBy(c => c.FirstName)
+                .Select(c => new
+                {
+                    Name = string.Join(", ", c.LastName, c.FirstName),
+                    c.CustomerId,
+                });
+            return query.ToList();
+        }
+
         public IEnumerable<CustomerNameAndEmail> GetNameAndEmails(IEnumerable<Customer> customerList)
         {
             return customerList
