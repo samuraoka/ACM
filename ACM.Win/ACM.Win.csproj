@@ -55,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\WinFormInvoiceRepository.cs" />
+    <Compile Include="Data\WinFormCustomerTypeRepository.cs" />
     <EmbeddedResource Include="CustomerWin.resx">
       <DependentUpon>CustomerWin.cs</DependentUpon>
     </EmbeddedResource>

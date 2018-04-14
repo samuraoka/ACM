@@ -10,6 +10,8 @@ namespace ACM.Win
     {
         private readonly CustomerRepository customerRepository
             = new WinFormCustomerRepository();
+        private readonly CustomerTypeRepository customerTypeRepository
+            = new WinFormCustomerTypeRepository();
 
         public CustomerWin()
         {
@@ -19,9 +21,9 @@ namespace ACM.Win
         private void GetCustomersButton_Click(object sender, EventArgs e)
         {
             var customerList = customerRepository.Retrieve();
-            var unpaidCustomerList = customerRepository.GetOverdueCustomers(customerList);
+            var customerTypeList = customerTypeRepository.Retrieve();
             CustomerGridView.DataSource =
-                customerRepository.SortByName(unpaidCustomerList).ToList();
+                customerRepository.GetNameAndTypes(customerList, customerTypeList).ToList();
         }
     }
 }
