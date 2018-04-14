@@ -20,7 +20,7 @@ namespace ACM.Win
         {
             var customerList = customerRepository.Retrieve();
             CustomerGridView.DataSource =
-                customerRepository.SortByName(customerList).ToList();
+                customerRepository.GetOverdueCustomers(customerList).ToList();
         }
     }
 }
