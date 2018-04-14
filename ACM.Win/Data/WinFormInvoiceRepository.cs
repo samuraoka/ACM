@@ -1,14 +1,17 @@
 ﻿using ACM.BL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ACM.Win.Data
 {
     internal class WinFormInvoiceRepository : InvoiceRepository
     {
-        public override IList<Invoice> Retrieve(int customerId)
+        private readonly List<Invoice> invoices;
+
+        public WinFormInvoiceRepository()
         {
-            return new List<Invoice> {
+            invoices = new List<Invoice> {
                 new Invoice()
                 {
                     InvoiceId = 1,
@@ -42,6 +45,11 @@ namespace ACM.Win.Data
                     IsPaid=true
                 },
             };
+        }
+
+        public override IList<Invoice> Retrieve(int customerId)
+        {
+            return invoices.Where(i => i.CustomerId == customerId).ToList();
         }
     }
 }
