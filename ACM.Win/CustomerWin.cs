@@ -19,8 +19,9 @@ namespace ACM.Win
         private void GetCustomersButton_Click(object sender, EventArgs e)
         {
             var customerList = customerRepository.Retrieve();
+            var unpaidCustomerList = customerRepository.GetOverdueCustomers(customerList);
             CustomerGridView.DataSource =
-                customerRepository.GetOverdueCustomers(customerList).ToList();
+                customerRepository.SortByName(unpaidCustomerList).ToList();
         }
     }
 }
