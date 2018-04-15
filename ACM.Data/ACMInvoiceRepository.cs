@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ACM.Win.Data
+namespace ACM.Data
 {
-    internal class WinFormInvoiceRepository : InvoiceRepository
+    public class ACMInvoiceRepository : InvoiceRepository
     {
         private readonly List<Invoice> invoices;
 
-        public WinFormInvoiceRepository()
+        public ACMInvoiceRepository()
         {
             invoices = new List<Invoice> {
                 new Invoice()

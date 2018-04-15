@@ -51,11 +51,8 @@
     <Compile Include="CustomerWin.Designer.cs">
       <DependentUpon>CustomerWin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\WinFormCustomerRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\WinFormInvoiceRepository.cs" />
-    <Compile Include="Data\WinFormCustomerTypeRepository.cs" />
     <EmbeddedResource Include="CustomerWin.resx">
       <DependentUpon>CustomerWin.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,13 +79,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ACM.BL\ACM.BL.csproj">
-      <Project>{0f75b910-7684-49c3-b919-c3d5af29bc04}</Project>
-      <Name>ACM.BL</Name>
-    </ProjectReference>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
+    <ProjectReference Include="..\ACM.BL\ACM.BL.csproj">
+      <Project>{0F75B910-7684-49C3-B919-C3D5AF29BC04}</Project>
+      <Name>ACM.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ACM.Data\ACM.Data.csproj">
+      <Project>{7d37459d-894a-491f-98c0-25f017a35f84}</Project>
+      <Name>ACM.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

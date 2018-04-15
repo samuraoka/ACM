@@ -1,5 +1,5 @@
 ﻿using ACM.BL;
-using ACM.Win.Data;
+using ACM.Data;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,9 +9,9 @@ namespace ACM.Win
     public partial class CustomerWin : Form
     {
         private readonly CustomerRepository customerRepository
-            = new WinFormCustomerRepository();
+            = new ACMCustomerRepository();
         private readonly CustomerTypeRepository customerTypeRepository
-            = new WinFormCustomerTypeRepository();
+            = new ACMCustomerTypeRepository();
 
         public CustomerWin()
         {

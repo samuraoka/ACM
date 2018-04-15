@@ -1,9 +1,9 @@
 ﻿using ACM.BL;
 using System.Collections.Generic;
 
-namespace ACM.Win.Data
+namespace ACM.Data
 {
-    internal class WinFormCustomerTypeRepository : CustomerTypeRepository
+    public class ACMCustomerTypeRepository : CustomerTypeRepository
     {
         public override IList<CustomerType> Retrieve()
         {

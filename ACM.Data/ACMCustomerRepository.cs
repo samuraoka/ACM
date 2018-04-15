@@ -1,13 +1,13 @@
 ﻿using ACM.BL;
 using System.Collections.Generic;
 
-namespace ACM.Win.Data
+namespace ACM.Data
 {
-    class WinFormCustomerRepository : CustomerRepository
+    public class ACMCustomerRepository : CustomerRepository
     {
         public override IList<Customer> Retrieve()
         {
-            var invoiceRepository = new WinFormInvoiceRepository();
+            var invoiceRepository = new ACMInvoiceRepository();
 
             List<Customer> custList = new List<Customer>
                     {new Customer()
