@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACM.Library.Test", "ACM.Lib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACM.Win", "ACM.Win\ACM.Win.csproj", "{CE613556-5E9D-49A3-9573-AD537F1C12BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACM.WPF", "ACM.WPF\ACM.WPF.csproj", "{FFD36DB5-E4AE-4F6C-864F-9A732F62AABB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{CE613556-5E9D-49A3-9573-AD537F1C12BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE613556-5E9D-49A3-9573-AD537F1C12BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE613556-5E9D-49A3-9573-AD537F1C12BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD36DB5-E4AE-4F6C-864F-9A732F62AABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD36DB5-E4AE-4F6C-864F-9A732F62AABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD36DB5-E4AE-4F6C-864F-9A732F62AABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD36DB5-E4AE-4F6C-864F-9A732F62AABB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
