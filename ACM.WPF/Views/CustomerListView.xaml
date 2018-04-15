@@ -3,10 +3,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d" 
+      xmlns:vms="clr-namespace:ACM.WPF.ViewModels"
+      mc:Ignorable="d"
       d:DesignHeight="350" d:DesignWidth="800"
       Title="Customer List">
 
+    <Page.DataContext>
+        <vms:CustomerListViewModel/>
+    </Page.DataContext>
+    
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <!-- Column Headers -->
@@ -14,7 +19,7 @@
             <!-- Data -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Column Headers -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -35,8 +40,8 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Name}" Margin="5"/>
-                        <TextBox Grid.Column="1" Text="{Binding CustomerTypeName}" Margin="5" HorizontalAlignment="Stretch"/>
+                        <TextBlock Grid.Column="0" Text="{Binding LastName}" Style="{StaticResource NormalTextStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CustomerTypeId}" Style="{StaticResource NormalTextStyle}"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
