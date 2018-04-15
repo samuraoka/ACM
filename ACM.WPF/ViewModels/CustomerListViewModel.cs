@@ -1,14 +1,15 @@
 ﻿using ACM.BL;
 using ACM.Data;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ACM.WPF.ViewModels
 {
     public class CustomerListViewModel : ViewModelBase
     {
-        private ObservableCollection<Customer> customers;
+        private ObservableCollection<CustomerNameAndType> customers;
 
-        public ObservableCollection<Customer> Customers
+        public ObservableCollection<CustomerNameAndType> Customers
         {
             get { return customers; }
             set
@@ -22,6 +23,7 @@ namespace ACM.WPF.ViewModels
         }
 
         CustomerRepository customerRepository = new ACMCustomerRepository();
+        CustomerTypeRepository customerTypeRepository = new ACMCustomerTypeRepository();
 
         public CustomerListViewModel()
         {
@@ -30,9 +32,11 @@ namespace ACM.WPF.ViewModels
 
         public void LoadData()
         {
-            var customerList = customerRepository.Retrieve();
-            var sortedList = customerRepository.SortByName(customerList);
-            customers = new ObservableCollection<Customer>(customerList);
+            IEnumerable<Customer> customerList = customerRepository.Retrieve();
+            customerList = customerRepository.SortByName(customerList);
+            var customerTypeList = customerTypeRepository.Retrieve();
+            customers = new ObservableCollection<CustomerNameAndType>(
+                customerRepository.GetNameAndTypes(customerList, customerTypeList));
 
         }
     }

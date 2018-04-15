@@ -73,7 +73,7 @@
             // 
             // customerBindingSource
             // 
-            this.customerBindingSource.DataSource = typeof(ACM.BL.Customer);
+            this.customerBindingSource.DataSource = typeof(ACM.BL.CustomerNameAndType);
             // 
             // CustomerWin
             // 
