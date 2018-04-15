@@ -30,8 +30,9 @@ namespace ACM.WPF.ViewModels
 
         public void LoadData()
         {
-            customers = new ObservableCollection<Customer>(
-                customerRepository.Retrieve());
+            var customerList = customerRepository.Retrieve();
+            var sortedList = customerRepository.SortByName(customerList);
+            customers = new ObservableCollection<Customer>(customerList);
 
         }
     }
