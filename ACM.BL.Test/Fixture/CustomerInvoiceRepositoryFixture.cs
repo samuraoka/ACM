@@ -1,4 +1,4 @@
-﻿namespace ACM.BL.Test
+﻿namespace ACM.BL.Fixture.Test
 {
     public class CustomerInvoiceRepositoryFixture
     {

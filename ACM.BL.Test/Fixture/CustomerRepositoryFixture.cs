@@ -1,7 +1,7 @@
 ﻿using Moq;
 using System.Collections.Generic;
 
-namespace ACM.BL.Test
+namespace ACM.BL.Fixture.Test
 {
     public class CustomerRepositoryFixture
     {
