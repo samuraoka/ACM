@@ -13,6 +13,12 @@ namespace ACM.BL
         public decimal Amount { get; set; }
         public int NumberOfUnits { get; set; }
         public decimal DiscountPercent { get; set; }
-        public decimal TotalAmount { get; set; }
+        public decimal TotalAmount
+        {
+            get
+            {
+                return Amount * (100 - DiscountPercent) * 0.01M;
+            }
+        }
     }
 }

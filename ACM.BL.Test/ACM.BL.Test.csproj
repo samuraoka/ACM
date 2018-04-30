@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ACM.BL\ACM.BL.csproj" />
+    <ProjectReference Include="..\ACM.Data\ACM.Data.csproj" />
   </ItemGroup>
 
 </Project>

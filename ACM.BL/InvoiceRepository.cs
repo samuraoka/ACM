@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ACM.BL
 {
@@ -15,5 +16,15 @@ namespace ACM.BL
         /// <param name="customerId"></param>
         /// <returns></returns>
         public abstract IList<Invoice> Retrieve(int customerId);
+
+        public decimal CalculateTotalAmountInvoiced(IList<Invoice> invoiceList)
+        {
+            return invoiceList.Sum(inv => inv.TotalAmount);
+        }
+
+        public decimal CalculateTotalUnitsSold(IList<Invoice> invoiceList)
+        {
+            return invoiceList.Sum(inv => inv.NumberOfUnits);
+        }
     }
 }
