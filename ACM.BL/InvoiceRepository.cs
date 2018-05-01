@@ -26,5 +26,14 @@ namespace ACM.BL
         {
             return invoiceList.Sum(inv => inv.NumberOfUnits);
         }
+
+        public IDictionary<bool, decimal> GetInvoiceTotalByIsPaid(IList<Invoice> invoiceList)
+        {
+            // Is there a better way to aggregate a dictionary using LINQ?
+            // https://stackoverflow.com/questions/3338166/is-there-a-better-way-to-aggregate-a-dictionary-using-linq
+            return invoiceList.GroupBy(
+                inv => inv.IsPaid ?? false,
+                inv => inv.TotalAmount).ToDictionary(g => g.Key, g => g.Sum());
+        }
     }
 }
