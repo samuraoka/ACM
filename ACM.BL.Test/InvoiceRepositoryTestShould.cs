@@ -58,5 +58,24 @@ namespace ACM.BL.Test
             // https://stackoverflow.com/questions/37854264/having-an-actual-decimal-value-as-parameter-for-an-attribute-example-xunit-net
             Assert.Equal(Convert.ToDecimal(invoiceTotal), actual[isPaid]);
         }
+
+        [Theory]
+        [InlineData(false, "June", "199.99")]
+        [InlineData(false, "July", "313.65")]
+        [InlineData(true, "July", "17")]
+        [InlineData(false, "August", "525")]
+        [InlineData(true, "August", "277.5")]
+        public void GetInvoiceTotalByIsPaidAndMonth(bool isPaid, string month, string invoiceTotal)
+        {
+            // Arrange
+            var invoiceList = repo.Retrieve();
+            var isPaidMonth = Tuple.Create(isPaid, month);
+
+            // Act
+            var actual = repo.GetInvoiceTotalByIsPaidAndMonth(invoiceList);
+
+            // Assert
+            Assert.Equal(Convert.ToDecimal(invoiceTotal), actual[isPaidMonth]);
+        }
     }
 }

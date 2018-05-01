@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ACM.BL
@@ -34,6 +36,18 @@ namespace ACM.BL
             return invoiceList.GroupBy(
                 inv => inv.IsPaid ?? false,
                 inv => inv.TotalAmount).ToDictionary(g => g.Key, g => g.Sum());
+        }
+
+        public IDictionary<Tuple<bool, string>, decimal> GetInvoiceTotalByIsPaidAndMonth(IList<Invoice> invoiceList)
+        {
+            return invoiceList.GroupBy(
+                inv => new
+                {
+                    IsPaid = inv.IsPaid ?? false,
+                    InvoiceMonth = inv.InvoiceDate.ToString("MMMM", new CultureInfo("en-us")),
+                },
+                inv => inv.TotalAmount).
+                ToDictionary(g => Tuple.Create(g.Key.IsPaid, g.Key.InvoiceMonth), g => g.Sum());
         }
     }
 }
