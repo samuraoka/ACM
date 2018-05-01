@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 namespace ACM.BL.Test
 {
 
-    public class CustomerRepositoryTest
+    public class CustomerRepositoryTestShould
         : IClassFixture<CustomerInvoiceRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
     {
         private CustomerRepository customerRepo;
@@ -16,7 +16,7 @@ namespace ACM.BL.Test
         private CustomerTypeRepository customerTypeRepo;
         private readonly ITestOutputHelper output;
 
-        public CustomerRepositoryTest(CustomerInvoiceRepositoryFixture customerInvoiceRepoFixture,
+        public CustomerRepositoryTestShould(CustomerInvoiceRepositoryFixture customerInvoiceRepoFixture,
             CustomerTypeRepositoryFixture customerTypeRepoFixture, ITestOutputHelper output)
         {
             customerRepo = customerInvoiceRepoFixture.CustomerRepoFixture.Repository;
@@ -28,7 +28,7 @@ namespace ACM.BL.Test
         //TODO
 
         [Fact]
-        public void ShouldReturnExistingCustomer()
+        public void ReturnExistingCustomer()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -48,7 +48,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldReturnNullIfNoCustomerFound()
+        public void ReturnNullIfNoCustomerFound()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -65,7 +65,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldSkipSomeCustomers()
+        public void SkipSomeCustomers()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -83,7 +83,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldSortByName()
+        public void SortByName()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -137,7 +137,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldSortByNameInReverse()
+        public void SortByNameInReverse()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -189,7 +189,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldSortByType()
+        public void SortByType()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -241,7 +241,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldGetNames()
+        public void GetNames()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -260,7 +260,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldGetNameAndEmails()
+        public void GetNameAndEmails()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -282,7 +282,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldGetNameAndTypes()
+        public void GetNameAndTypes()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
@@ -304,7 +304,7 @@ namespace ACM.BL.Test
         }
 
         [Fact]
-        public void ShouldGetOverdueCustomers()
+        public void GetOverdueCustomers()
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
