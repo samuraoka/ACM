@@ -78,5 +78,12 @@ namespace ACM.BL
                 .SelectMany(c => c.InvoiceList.Where(i => (i.IsPaid ?? false) == false),
                 (c, i) => c).Distinct();
         }
+
+        public IDictionary<int, decimal> GetInvoiceTotalByCustomerType(IList<Customer> customerList)
+        {
+            return customerList.GroupBy(c => c.CustomerTypeId ?? 0,
+                c => c.InvoiceList.Sum(inv => inv.TotalAmount)).
+                ToDictionary(g => g.Key, g => g.Sum());
+        }
     }
 }

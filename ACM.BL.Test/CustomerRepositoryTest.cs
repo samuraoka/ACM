@@ -1,4 +1,6 @@
 ﻿using ACM.BL.Fixture.Test;
+using ACM.Data;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -133,7 +135,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
             };
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result, new CustomerEqualityComparer());
         }
 
         [Fact]
@@ -185,7 +187,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(2),
                 },
             };
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result, new CustomerEqualityComparer());
         }
 
         [Fact]
@@ -237,7 +239,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(2),
                 },
             };
-            Assert.Equal(expected, result);
+            Assert.Equal(expected, result, new CustomerEqualityComparer());
         }
 
         [Fact]
@@ -335,8 +337,35 @@ namespace ACM.BL.Test
                     CustomerTypeId = null,
                     InvoiceList = invoiceRepo.Retrieve(2),
                 },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 1,
+                    InvoiceList = invoiceRepo.Retrieve(3),
+                },
             };
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, new CustomerEqualityComparer());
+        }
+
+        [Theory]
+        [InlineData(0, "300.0")]
+        [InlineData(1, "958.14")]
+        [InlineData(2, "75.0")]
+        public void GetInvoiceTotalByCustomerType(int customerType, string invoiceTotal)
+        {
+            // Arrange
+            var customerList = customerRepo.Retrieve();
+            var invoiceList = new ACMInvoiceRepository().Retrieve();
+            var expectedInvoiceTotal = Convert.ToDecimal(invoiceTotal);
+
+            // Act
+            var actual = customerRepo.GetInvoiceTotalByCustomerType(customerList);
+
+            // Assert
+            Assert.Equal(expectedInvoiceTotal, actual[customerType]);
         }
     }
 }
