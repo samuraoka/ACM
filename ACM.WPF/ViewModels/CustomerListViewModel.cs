@@ -22,7 +22,7 @@ namespace ACM.WPF.ViewModels
             }
         }
 
-        CustomerRepository customerRepository = new ACMCustomerRepository();
+        CustomerRepository customerRepository = new ACMCustomerRepository(new ACMInvoiceRepository());
         CustomerTypeRepository customerTypeRepository = new ACMCustomerTypeRepository();
 
         public CustomerListViewModel()

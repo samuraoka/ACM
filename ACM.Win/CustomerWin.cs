@@ -9,7 +9,7 @@ namespace ACM.Win
     public partial class CustomerWin : Form
     {
         private readonly CustomerRepository customerRepository
-            = new ACMCustomerRepository();
+            = new ACMCustomerRepository(new ACMInvoiceRepository());
         private readonly CustomerTypeRepository customerTypeRepository
             = new ACMCustomerTypeRepository();
 
