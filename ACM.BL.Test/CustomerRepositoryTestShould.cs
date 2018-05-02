@@ -21,9 +21,9 @@ namespace ACM.BL.Test
         public CustomerRepositoryTestShould(CustomerInvoiceRepositoryFixture customerInvoiceRepoFixture,
             CustomerTypeRepositoryFixture customerTypeRepoFixture, ITestOutputHelper output)
         {
-            customerRepo = customerInvoiceRepoFixture.CustomerRepoFixture.Repository;
-            invoiceRepo = customerInvoiceRepoFixture.InvoiceRepoFixture.Repository;
-            this.customerTypeRepo = customerTypeRepoFixture.Repository;
+            customerRepo = customerInvoiceRepoFixture.CustomerRepository;
+            invoiceRepo = customerInvoiceRepoFixture.InvoiceRepository;
+            customerTypeRepo = customerTypeRepoFixture.Repository;
             this.output = output;
         }
 

@@ -1,14 +1,16 @@
-﻿namespace ACM.BL.Fixture.Test
+﻿using ACM.Data;
+
+namespace ACM.BL.Fixture.Test
 {
     public class CustomerInvoiceRepositoryFixture
     {
-        public CustomerRepositoryFixture CustomerRepoFixture { get; }
-        public InvoiceRepositoryFixture InvoiceRepoFixture { get; }
+        public CustomerRepository CustomerRepository { get; }
+        public InvoiceRepository InvoiceRepository { get; }
 
         public CustomerInvoiceRepositoryFixture()
         {
-            InvoiceRepoFixture = new InvoiceRepositoryFixture();
-            CustomerRepoFixture = new CustomerRepositoryFixture(InvoiceRepoFixture.Repository);
+            InvoiceRepository = new InvoiceRepositoryFixture().Repository;
+            CustomerRepository = new ACMCustomerRepository(InvoiceRepository);
         }
     }
 }
