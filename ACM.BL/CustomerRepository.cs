@@ -8,7 +8,7 @@ namespace ACM.BL
     {
         public abstract IList<Customer> Retrieve();
 
-        public IEnumerable<Customer> Find(IList<Customer> customerList, int customerId)
+        public IEnumerable<Customer> Find(IEnumerable<Customer> customerList, int customerId)
         {
             return customerList.Where(c => c.CustomerId == customerId);
         }
@@ -71,7 +71,7 @@ namespace ACM.BL
                 });
         }
 
-        public IEnumerable<Customer> GetOverdueCustomers(IList<Customer> customerList)
+        public IEnumerable<Customer> GetOverdueCustomers(IEnumerable<Customer> customerList)
         {
             // ?? Operator (C# Reference)
             // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-conditional-operator
@@ -81,7 +81,7 @@ namespace ACM.BL
         }
 
         public IDictionary<int, Tuple<string, decimal>> GetInvoiceTotalByCustomerType(
-            IList<Customer> customerList, IList<CustomerType> customerTypeList)
+            IEnumerable<Customer> customerList, IEnumerable<CustomerType> customerTypeList)
         {
             return customerList.Join(customerTypeList,
                 c => c.CustomerTypeId ?? 0, ct => ct.CustomerTypeId,
@@ -96,6 +96,15 @@ namespace ACM.BL
                 },
                 c => c.CustomerInstance.InvoiceList.Sum(inv => inv.TotalAmount)).
                 ToDictionary(g => g.Key.CustomerType, g => Tuple.Create(g.Key.CustomerTypeName, g.Sum()));
+        }
+
+        public IEnumerable<KeyValuePair<string, decimal>> GetInvoiceTotalByCustomerTypeInKeyValuePair(
+            IEnumerable<Customer> customerList, IEnumerable<CustomerType> customerTypeList)
+        {
+            var data = new List<KeyValuePair<string, decimal>>();
+            GetInvoiceTotalByCustomerType(customerList, customerTypeList).Values.ToList().ForEach(
+                x => data.Add(new KeyValuePair<string, decimal>(x.Item1, x.Item2)));
+            return data;
         }
     }
 }

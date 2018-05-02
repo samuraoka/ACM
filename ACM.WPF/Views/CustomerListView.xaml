@@ -4,6 +4,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vms="clr-namespace:ACM.WPF.ViewModels"
+      xmlns:toolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+      xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       mc:Ignorable="d"
       d:DesignHeight="350" d:DesignWidth="800"
       Title="Customer List">
@@ -17,6 +19,8 @@
             <!-- Column Headers -->
             <RowDefinition Height="Auto"/>
             <!-- Data -->
+            <RowDefinition Height="Auto"/>
+            <!-- Graph -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -46,5 +50,22 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <!--
+            WPFToolkit.DataVisualization
+            https://www.nuget.org/packages/WPFToolkit.DataVisualization/
+            Install-Package -Id WPFToolkit.DataVisualization -Project ACM.WPF
+        -->
+        <charting:Chart Grid.Row="2" Width="400" Height="200"
+                        HorizontalAlignment="Left" VerticalAlignment="Top">
+            <charting:Chart.Series>
+                <charting:PieSeries
+                    ItemsSource="{Binding ChartData}"
+                    DependentValuePath="Value"
+                    IndependentValuePath="Key"
+                    Title="Total Invoices By Type"
+                    IsSelectionEnabled="True" />
+            </charting:Chart.Series>
+        </charting:Chart>
     </Grid>
 </Page>
