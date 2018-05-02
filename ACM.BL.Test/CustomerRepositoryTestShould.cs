@@ -348,22 +348,24 @@ namespace ACM.BL.Test
         }
 
         [Theory]
-        [InlineData(0, "300.0")]
-        [InlineData(1, "491.14")]
-        [InlineData(2, "75.0")]
-        [InlineData(4, "467.0")]
-        public void GetInvoiceTotalByCustomerType(int customerType, string invoiceTotal)
+        [InlineData(0, "N/A", "300.0")]
+        [InlineData(1, "Corporate", "491.14")]
+        [InlineData(2, "Individual", "75.0")]
+        [InlineData(4, "Government", "467.0")]
+        public void GetInvoiceTotalByCustomerType(int customerType, string customerTypeName, string invoiceTotal)
         {
             // Arrange
             var customerList = customerRepo.Retrieve();
-            var invoiceList = new ACMInvoiceRepository().Retrieve();
+            var invoiceList = invoiceRepo.Retrieve();
+            var customerTypeList = customerTypeRepo.Retrieve();
             var expectedInvoiceTotal = Convert.ToDecimal(invoiceTotal);
 
             // Act
-            var actual = customerRepo.GetInvoiceTotalByCustomerType(customerList);
+            var actual = customerRepo.GetInvoiceTotalByCustomerType(customerList, customerTypeList);
 
             // Assert
-            Assert.Equal(expectedInvoiceTotal, actual[customerType]);
+            Assert.Equal(customerTypeName, actual[customerType].Item1);
+            Assert.Equal(expectedInvoiceTotal, actual[customerType].Item2);
         }
     }
 }

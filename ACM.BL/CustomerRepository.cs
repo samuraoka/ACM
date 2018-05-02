@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ACM.BL
@@ -79,11 +80,22 @@ namespace ACM.BL
                 (c, i) => c).Distinct();
         }
 
-        public IDictionary<int, decimal> GetInvoiceTotalByCustomerType(IList<Customer> customerList)
+        public IDictionary<int, Tuple<string, decimal>> GetInvoiceTotalByCustomerType(
+            IList<Customer> customerList, IList<CustomerType> customerTypeList)
         {
-            return customerList.GroupBy(c => c.CustomerTypeId ?? 0,
-                c => c.InvoiceList.Sum(inv => inv.TotalAmount)).
-                ToDictionary(g => g.Key, g => g.Sum());
+            return customerList.Join(customerTypeList,
+                c => c.CustomerTypeId ?? 0, ct => ct.CustomerTypeId,
+                (c, ct) => new
+                {
+                    CustomerInstance = c,
+                    CustomerTypeName = ct.TypeName,
+                }).GroupBy(c => new
+                {
+                    CustomerType = c.CustomerInstance.CustomerTypeId ?? 0,
+                    c.CustomerTypeName,
+                },
+                c => c.CustomerInstance.InvoiceList.Sum(inv => inv.TotalAmount)).
+                ToDictionary(g => g.Key.CustomerType, g => Tuple.Create(g.Key.CustomerTypeName, g.Sum()));
         }
     }
 }

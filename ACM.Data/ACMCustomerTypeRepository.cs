@@ -8,6 +8,7 @@ namespace ACM.Data
         public override IList<CustomerType> Retrieve()
         {
             return new List<CustomerType> {
+                new CustomerType { CustomerTypeId = 0, TypeName = "N/A", DisplayOrder = int.MaxValue },
                 new CustomerType { CustomerTypeId = 1, TypeName = "Corporate", DisplayOrder = 2 },
                 new CustomerType { CustomerTypeId = 2, TypeName = "Individual", DisplayOrder = 1 },
                 new CustomerType { CustomerTypeId = 3, TypeName = "Educator", DisplayOrder = 4 },
