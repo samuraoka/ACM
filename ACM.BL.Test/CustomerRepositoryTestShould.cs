@@ -78,10 +78,7 @@ namespace ACM.BL.Test
                 .Skip(1).FirstOrDefault();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(3, result.CustomerId);
-            Assert.Equal("Gamgee", result.LastName);
-            Assert.Equal("Samwise", result.FirstName);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -131,7 +128,7 @@ namespace ACM.BL.Test
                     FirstName = "Samwise",
                     LastName = "Gamgee",
                     EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1,
+                    CustomerTypeId = 4,
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
             };
@@ -156,7 +153,7 @@ namespace ACM.BL.Test
                     FirstName = "Samwise",
                     LastName = "Gamgee",
                     EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1,
+                    CustomerTypeId = 4,
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
                 new Customer
@@ -213,21 +210,21 @@ namespace ACM.BL.Test
                 },
                 new Customer
                 {
-                    CustomerId = 3,
-                    FirstName = "Samwise",
-                    LastName = "Gamgee",
-                    EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1,
-                    InvoiceList = invoiceRepo.Retrieve(3),
-                },
-                new Customer
-                {
                     CustomerId = 4,
                     FirstName = "Rosie",
                     LastName = "Cotton",
                     EmailAddress = "rc@hob.me",
                     CustomerTypeId = 2,
                     InvoiceList = invoiceRepo.Retrieve(4),
+                },
+                new Customer
+                {
+                    CustomerId = 3,
+                    FirstName = "Samwise",
+                    LastName = "Gamgee",
+                    EmailAddress = "sg@hob.me",
+                    CustomerTypeId = 4,
+                    InvoiceList = invoiceRepo.Retrieve(3),
                 },
                 new Customer
                 {
@@ -299,7 +296,7 @@ namespace ACM.BL.Test
             // Assert
             var expected = new HashSet<CustomerNameAndType> {
                 new CustomerNameAndType { Name = "Baggins, Frodo",  CustomerTypeName = "Corporate" },
-                new CustomerNameAndType { Name = "Gamgee, Samwise", CustomerTypeName = "Corporate" },
+                new CustomerNameAndType { Name = "Gamgee, Samwise", CustomerTypeName = "Government" },
                 new CustomerNameAndType { Name = "Cotton, Rosie",  CustomerTypeName = "Individual" },
             };
             Assert.Equal(expected, actual);
@@ -343,7 +340,7 @@ namespace ACM.BL.Test
                     FirstName = "Samwise",
                     LastName = "Gamgee",
                     EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1,
+                    CustomerTypeId = 4,
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
             };
@@ -352,8 +349,9 @@ namespace ACM.BL.Test
 
         [Theory]
         [InlineData(0, "300.0")]
-        [InlineData(1, "958.14")]
+        [InlineData(1, "491.14")]
         [InlineData(2, "75.0")]
+        [InlineData(4, "467.0")]
         public void GetInvoiceTotalByCustomerType(int customerType, string invoiceTotal)
         {
             // Arrange

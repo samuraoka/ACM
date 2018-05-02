@@ -34,7 +34,7 @@ namespace ACM.BL.Fixture.Test
                     FirstName = "Samwise",
                     LastName = "Gamgee",
                     EmailAddress = "sg@hob.me",
-                    CustomerTypeId = 1,
+                    CustomerTypeId = 4,
                     InvoiceList = invoiceRepository.Retrieve(3),
                 },
                 new Customer
