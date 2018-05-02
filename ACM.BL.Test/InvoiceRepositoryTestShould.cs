@@ -1,5 +1,6 @@
 ﻿using ACM.Data;
 using System;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -76,6 +77,62 @@ namespace ACM.BL.Test
 
             // Assert
             Assert.Equal(Convert.ToDecimal(invoiceTotal), actual[isPaidMonth]);
+        }
+
+        [Theory]
+        [InlineData("6.875")]
+        public void CalculateMeanOfDiscountPercent(string expectedMean)
+        {
+            // Arrange
+            var invoiceList = repo.Retrieve();
+
+            // Act
+            var actualMean = repo.CalculateMean(invoiceList);
+
+            // Assert
+            Assert.Equal(Convert.ToDecimal(expectedMean), actualMean);
+        }
+
+        [Theory]
+        [InlineData("10")]
+        public void CalculateMedianDiscountPercentEven(string expectedMedian)
+        {
+            // Arrange
+            var invoiceList = repo.Retrieve();
+
+            // Act
+            var actualMedian = repo.CalculateMedian(invoiceList);
+
+            // Assert
+            Assert.Equal(Convert.ToDecimal(expectedMedian), actualMedian);
+        }
+
+        [Theory]
+        [InlineData("10")]
+        public void CalculateMedianDiscountPercentOdd(string expectedMedian)
+        {
+            // Arrange
+            var invoiceList = repo.Retrieve().Where(inv => inv.CustomerId == 1);
+
+            // Act
+            var actualMedian = repo.CalculateMedian(invoiceList);
+
+            // Assert
+            Assert.Equal(Convert.ToDecimal(expectedMedian), actualMedian);
+        }
+
+        [Theory]
+        [InlineData("10")]
+        public void CalculateModeDiscountPercent(string expectedMode)
+        {
+            // Arrange
+            var invoiceList = repo.Retrieve();
+
+            // Act
+            var actualMode = repo.CalculateMode(invoiceList);
+
+            // Assert
+            Assert.Equal(Convert.ToDecimal(expectedMode), actualMode);
         }
     }
 }

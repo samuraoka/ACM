@@ -112,5 +112,42 @@ namespace ACM.Data
         {
             return invoices.Where(i => i.CustomerId == customerId).ToList();
         }
+
+        public decimal CalculateMean(IEnumerable<Invoice> invoiceList)
+        {
+            return invoiceList.Average(inv => inv.DiscountPercent);
+        }
+
+        public decimal CalculateMedian(IEnumerable<Invoice> invoiceList)
+        {
+            if (invoiceList == null)
+            {
+                throw new ArgumentNullException("invoiceList");
+            }
+
+            var sortedList = invoiceList.OrderBy(inv => inv.DiscountPercent);
+            int count = sortedList.Count();
+            int position = count / 2;
+
+            decimal median;
+            if ((count % 2) == 0)
+            {
+                median = (sortedList.ElementAt(position - 1).DiscountPercent
+                    + sortedList.ElementAt(position).DiscountPercent) / 2;
+            }
+            else
+            {
+                median = sortedList.ElementAt(position).DiscountPercent;
+            }
+
+            return median;
+        }
+
+        public decimal CalculateMode(IList<Invoice> invoiceList)
+        {
+            return invoiceList.GroupBy(inv => inv.DiscountPercent)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault().Key;
+        }
     }
 }
