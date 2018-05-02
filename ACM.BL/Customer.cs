@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace ACM.BL
@@ -22,7 +21,7 @@ namespace ACM.BL
                    LastName == customer.LastName &&
                    EqualityComparer<int?>.Default.Equals(CustomerTypeId, customer.CustomerTypeId) &&
                    EmailAddress == customer.EmailAddress &&
-                   EqualityComparer<IList<Invoice>>.Default.Equals(InvoiceList, customer.InvoiceList);
+                   new InvoiceListEqualityComparer().Equals(InvoiceList, customer.InvoiceList);
         }
 
         public override int GetHashCode()
@@ -51,38 +50,31 @@ namespace ACM.BL
         }
     }
 
-    public class CustomerEqualityComparer : IEqualityComparer<Customer>
+    public class InvoiceListEqualityComparer : IEqualityComparer<IList<Invoice>>
     {
-        public bool Equals(Customer x, Customer y)
+        public bool Equals(IList<Invoice> x, IList<Invoice> y)
         {
-            if (x == null || y == null)
+            if (x == y)
             {
-                throw new ArgumentNullException("arguments cannot be null");
+                return true;
             }
 
-            if (x.InvoiceList == null || y.InvoiceList == null
-                || x.InvoiceList.Count != y.InvoiceList.Count)
+            if (x == null || y == null || x.Count != y.Count)
             {
                 return false;
             }
 
             bool result = true;
-            result &= x.CustomerId.Equals(y.CustomerId);
-            result &= x.FirstName.Equals(y.FirstName);
-            result &= x.LastName.Equals(y.LastName);
-            result &= x.EmailAddress.Equals(y.EmailAddress);
-            result &= x.CustomerTypeId.Equals(y.CustomerTypeId);
-
-            for (int i = 0; i < x.InvoiceList.Count; i++)
+            for (int i = 0; i < x.Count; i++)
             {
-                result &= x.InvoiceList[i].Equals(y.InvoiceList[i]);
+                result &= x[i].Equals(y[i]);
             }
             return result;
         }
 
-        public int GetHashCode(Customer obj)
+        public int GetHashCode(IList<Invoice> obj)
         {
-            //TODO
+            // TODO
             throw new System.NotImplementedException();
         }
     }

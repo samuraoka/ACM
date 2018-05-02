@@ -135,7 +135,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
             };
-            Assert.Equal(expected, result, new CustomerEqualityComparer());
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -187,7 +187,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(2),
                 },
             };
-            Assert.Equal(expected, result, new CustomerEqualityComparer());
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -239,7 +239,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(2),
                 },
             };
-            Assert.Equal(expected, result, new CustomerEqualityComparer());
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace ACM.BL.Test
                     InvoiceList = invoiceRepo.Retrieve(3),
                 },
             };
-            Assert.Equal(expected, actual, new CustomerEqualityComparer());
+            Assert.Equal(expected, actual);
         }
 
         [Theory]
