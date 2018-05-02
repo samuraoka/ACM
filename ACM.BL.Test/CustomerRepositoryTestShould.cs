@@ -11,18 +11,18 @@ namespace ACM.BL.Test
 {
 
     public class CustomerRepositoryTestShould
-        : IClassFixture<CustomerInvoiceRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
+        : IClassFixture<CustomerRepositoryFixture>, IClassFixture<CustomerTypeRepositoryFixture>
     {
         private CustomerRepository customerRepo;
         private InvoiceRepository invoiceRepo;
         private CustomerTypeRepository customerTypeRepo;
         private readonly ITestOutputHelper output;
 
-        public CustomerRepositoryTestShould(CustomerInvoiceRepositoryFixture customerInvoiceRepoFixture,
+        public CustomerRepositoryTestShould(CustomerRepositoryFixture customerRepoFixture,
             CustomerTypeRepositoryFixture customerTypeRepoFixture, ITestOutputHelper output)
         {
-            customerRepo = customerInvoiceRepoFixture.CustomerRepository;
-            invoiceRepo = customerInvoiceRepoFixture.InvoiceRepository;
+            customerRepo = customerRepoFixture.CustomerRepository;
+            invoiceRepo = customerRepoFixture.InvoiceRepository;
             customerTypeRepo = customerTypeRepoFixture.Repository;
             this.output = output;
         }
